@@ -3,7 +3,7 @@ module App.Events where
 import Prelude
 
 import App.Routes (Route)
-import App.State (State(..))
+import App.State (State(..), Todos)
 import Control.Monad.Aff (attempt)
 import Control.Monad.Eff.Class (liftEff)
 import Control.Monad.Eff.Console (CONSOLE, log)
@@ -14,11 +14,12 @@ import Data.HTTP.Method (Method(..))
 import Data.Maybe (Maybe(..))
 import Network.HTTP.Affjax (AJAX, Affjax, affjax, defaultRequest, get)
 import Pux (EffModel, noEffects)
+import Simple.JSON (readJSON)
 
 data Event = PageView Route 
     | IncrementCount
     | MakeRequest
-    | ResponseReceived String
+    | ResponseReceived Todos
 
 type AppEffects fx = (ajax :: AJAX, console :: CONSOLE | fx)
 
@@ -29,7 +30,12 @@ foldp MakeRequest st =
   {state: st
   ,effects: [ do 
     res <- get "http://jsonplaceholder.typicode.com/users/1/todos" :: Affjax _ String
-    l <- liftEff $ log ("Response: " <> res.response)
-    pure $ Just (ResponseReceived res.response) ] }
-foldp (ResponseReceived response) (State st) = noEffects $ State st
-
+    _ <- liftEff $ log "response received"
+    case (readJSON res.response) of
+      Right (r :: Todos) ->
+        pure $ Just $ ResponseReceived r
+      Left _ -> do
+        _ <- pure $ log "An error occurred"
+        pure Nothing
+   ] }
+foldp (ResponseReceived todos) (State st) = noEffects $ State st {todos = todos}
