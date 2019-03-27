@@ -1,18 +1,21 @@
 module App.View.Layout where
 
-import App.View.Homepage as Homepage
-import App.View.NotFound as NotFound
+import App.Events (Event)
 import App.Routes (Route(NotFound, Home))
 import App.State (State(..))
-import App.Events (Event)
-import CSS (CSS, fromString, (?), fontSize, display, inlineBlock, marginTop, marginRight, marginLeft, px, value, key, color, backgroundColor, padding, borderRadius)
+import App.View.Homepage as Homepage
+import App.View.NotFound as NotFound
+import CSS (CSS, backgroundColor, borderRadius, color, display, fontSize, fromString, inlineBlock, key, marginBottom, marginLeft, marginRight, marginTop, padding, px, value, width, (?), height)
 import CSS.Border (border, solid)
-import CSS.TextAlign (center, textAlign)
+import CSS.Color (darkgray)
+import CSS.Size (px)
 import CSS.Text (textDecoration, noneTextDecoration, letterSpacing)
 import CSS.Text.Transform (textTransform, uppercase)
+import CSS.TextAlign (center, leftTextAlign, textAlign)
 import Color (rgb)
 import Control.Bind (discard)
 import Data.Function (($), (#))
+import Data.Int (toNumber)
 import Pux.DOM.HTML (HTML, style)
 import Text.Smolder.HTML (div)
 import Text.Smolder.HTML.Attributes (className)
@@ -41,15 +44,10 @@ css = do
 
   fromString "h1" ? do
     fontSize (48.0 #px)
-    marginTop (48.0 #px)
+    marginTop (25.0 #px)
+    marginBottom (35.0 #px)
     textTransform uppercase
     letterSpacing (6.0 #px)
-
-  fromString "a" ? do
-    display inlineBlock
-    borderRadius (2.0 #px) (2.0 #px) (2.0 #px) (2.0 #px)
-    padding (6.0 #px) (6.0 #px) (6.0 #px) (6.0 #px)
-    textDecoration noneTextDecoration
 
   fromString ".guide" ? do
     border solid (2.0 #px) green
@@ -68,3 +66,17 @@ css = do
   fromString ".github:hover" ? do
     backgroundColor blue
     color white
+  
+  fromString ".article" ? do
+    textAlign leftTextAlign
+    marginBottom $ 15.0 #px
+    fromString "p" ? do
+      marginBottom $ 0.0 #px
+    fromString "img" ? do
+      width $ 80.0 #px
+      height $ 80.0 #px 
+      borderRadius (px 5.0) (px 5.0) (px 5.0) (px 5.0)
+  
+  fromString ".search-input" ? do
+    marginBottom $ 25.0 #px
+ 
