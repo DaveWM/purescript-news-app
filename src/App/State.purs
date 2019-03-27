@@ -24,16 +24,18 @@ type NewsResponse =
 newtype State = State
   { title :: String
   , route :: Route
-  , loaded :: Boolean
+  , loading :: Boolean
   , searchQuery :: Maybe SearchQuery
   , articles :: Array Article
+  , requests :: Int
   }
 
 init :: String -> State
 init url = State
   { title: config.title
   , route: match url
-  , loaded: false
+  , loading: true
   , searchQuery: Nothing
   , articles: []
+  , requests: 0
   }

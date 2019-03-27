@@ -5,9 +5,10 @@ import App.Routes (Route(NotFound, Home))
 import App.State (State(..))
 import App.View.Homepage as Homepage
 import App.View.NotFound as NotFound
-import CSS (CSS, backgroundColor, borderRadius, color, display, fontSize, fromString, inlineBlock, key, marginBottom, marginLeft, marginRight, marginTop, padding, px, value, width, (?), height)
+import CSS (CSS, position, backgroundColor, borderRadius, color, display, fontSize, fromString, inlineBlock, key, marginBottom, marginLeft, marginRight, marginTop, padding, px, value, width, (?), height, left, pct)
 import CSS.Border (border, solid)
 import CSS.Color (darkgray)
+import CSS.Display (absolute)
 import CSS.Size (px)
 import CSS.Text (textDecoration, noneTextDecoration, letterSpacing)
 import CSS.Text.Transform (textTransform, uppercase)
@@ -79,4 +80,10 @@ css = do
   
   fromString ".search-input" ? do
     marginBottom $ 25.0 #px
+
+  fromString ".loading-spinner.spinner-grow" ? do
+    height $ 70.0 #px
+    width $ 70.0 #px
+    position absolute
+    left $ 50.0 #pc
  

@@ -20,8 +20,11 @@ view (State s) =
     h1 $ text "Awesome News Feed"
     input ! className "form-control search-input" #! onChange (SearchQueryChanged <<< makeSearchQuery <<< targetValue) ! placeholder "Enter your search query..."
     div ! className "row" $ do 
+      if s.requests > 0
+        then div ! className "spinner-grow text-light loading-spinner" $ text ""
+        else div $ text ""
       for_ s.articles \article -> do
-        div ! className "media article" $ do
+        div ! className ("media article " <> if s.requests > 0 then "loading" else "") $ do
           a ! className "align-self-center mr-3" ! href article.url $ 
             img ! src article.urlToImage
           div ! className "media-body" $ do

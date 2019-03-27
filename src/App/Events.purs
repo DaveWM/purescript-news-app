@@ -12,10 +12,12 @@ import Data.Either (Either(..))
 import Data.Foreign (Foreign)
 import Data.Function (($))
 import Data.HTTP.Method (Method(..))
+import Data.List.NonEmpty (findLastIndex)
 import Data.Maybe (Maybe(..))
 import Network.HTTP.Affjax (AJAX, Affjax, affjax, defaultRequest, get)
 import Pux (EffModel, noEffects)
 import Simple.JSON (readJSON)
+import Text.Smolder.SVG.Attributes (offset)
 
 data Event = PageView Route 
     | SearchQueryChanged (Maybe SearchQuery)
@@ -32,9 +34,12 @@ parseResponse s =
         Nothing
 
 foldp :: ∀ fx. Event -> State -> EffModel State Event (AppEffects fx)
-foldp (PageView route) (State st) = noEffects $ State st { route = route, loaded = true }
+foldp (PageView route) (State st) = noEffects $ State st { route = route, loading = false }
 foldp (SearchQueryChanged maybeQuery) (State st) = 
-  {state: State st {searchQuery = maybeQuery}
+  {state: State st {searchQuery = maybeQuery,
+                    requests = case maybeQuery of
+                                Nothing -> st.requests
+                                _ -> st.requests + 1}
   ,effects: case maybeQuery of 
               Nothing -> []
               Just query -> [ do 
@@ -42,4 +47,4 @@ foldp (SearchQueryChanged maybeQuery) (State st) =
                               pure $ NewsResponseReceived <$> parseResponse res.response 
                             ]
   }
-foldp (NewsResponseReceived response) (State st) = noEffects $ State st {articles = response.articles}
+foldp (NewsResponseReceived response) (State st) = noEffects $ State st {articles = response.articles, requests = st.requests - 1}
