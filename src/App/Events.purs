@@ -6,7 +6,7 @@ import App.Routes (Route)
 import App.State (State(..), Todos)
 import Control.Monad.Aff (attempt)
 import Control.Monad.Eff.Class (liftEff)
-import Control.Monad.Eff.Console (CONSOLE, log)
+import Control.Monad.Eff.Console (CONSOLE, error, log)
 import Data.Either (Either(..))
 import Data.Foreign (Foreign)
 import Data.Function (($))
@@ -31,11 +31,11 @@ foldp MakeRequest st =
   ,effects: [ do 
     res <- get "http://jsonplaceholder.typicode.com/users/1/todos" :: Affjax _ String
     _ <- liftEff $ log "response received"
-    case (readJSON res.response) of
-      Right (r :: Todos) ->
-        pure $ Just $ ResponseReceived r
-      Left _ -> do
-        _ <- pure $ log "An error occurred"
+    case (readJSON res.response :: Either _ Todos) of
+      Right todos ->
+        pure $ Just $ ResponseReceived todos
+      Left errors -> do
+        _ <- liftEff $ error $ "An error occurred " <> (show errors)
         pure Nothing
    ] }
 foldp (ResponseReceived todos) (State st) = noEffects $ State st {todos = todos}

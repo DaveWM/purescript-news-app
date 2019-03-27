@@ -1,11 +1,4 @@
-# pux-starter-app
-
-The [starter app](http://github.com/alexmingoia/pux-starter-app) is a skeleton
-Pux project configured with webpack and supporting hot-reload for rapid
-development.
-
-For isomorphic rendering and routing a more complex configuration is available in the
-[`isomorphic`](https://github.com/alexmingoia/pux-starter-app/tree/isomorphic) branch.
+# purescript-news-app
 
 ## Installation
 

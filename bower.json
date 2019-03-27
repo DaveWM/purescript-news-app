@@ -1,10 +1,9 @@
 {
-  "name": "pux-starter-app",
-  "homepage": "https://github.com/alexmingoia/pux-starter-app",
+  "name": "purescript-news-app",
   "authors": [
-    "Alex Mingoia <talk@alexmingoia.com>"
+    "Dave Martin <dwmartin41@gmail.com>"
   ],
-  "description": "Starter Pux application using webpack with hot-reloading.",
+  "description": "Example news feed app, written using PureScript",
   "main": "support/entry.client.js",
   "license": "BSD3",
   "dependencies": {

@@ -16,7 +16,7 @@ import Text.Smolder.Markup ((!), text, (#!))
 view :: State -> HTML Event
 view (State s) =
   div do
-    h1 $ text "Pux"
+    h1 $ text "Awesome News Feed"
     p $ text ("Count is: " <> (show s.count)) 
     button #! onClick (const IncrementCount) $ text "Inc"
     button #! onClick (const MakeRequest) $ text "Load"

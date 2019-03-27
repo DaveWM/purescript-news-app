@@ -1,7 +1,7 @@
 {
-  "name": "pux-starter-app",
-  "version": "13.0.0",
-  "description": "Pux starter app with hot-reloading and isomorphic rendering and routing.",
+  "name": "purescript-news-feed",
+  "version": "1.0.0",
+  "description": "Example news feed app written in PureScript",
   "main": "support/index.js",
   "keywords": [
     "pux",
@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git://github.com/alexmingoia/pux-starter-app.git"
   },
-  "author": "Alexander C. Mingoia",
+  "author": "Dave Martin",
   "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/alexmingoia/pux-starter-app/issues"
