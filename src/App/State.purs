@@ -14,7 +14,7 @@ makeSearchQuery s = Just s
 
 type Article = 
   { title :: String
-  , urlToImage :: String
+  , urlToImage :: Maybe String
   , url :: String
   , description :: String}
 

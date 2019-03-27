@@ -85,5 +85,5 @@ css = do
     height $ 70.0 #px
     width $ 70.0 #px
     position absolute
-    left $ 50.0 #pc
+    left $ 50.0 #pct
  
